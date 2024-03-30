@@ -60,7 +60,7 @@ Full documentation of available functions and configuration can be found on:
 
 ### 1. Disparity in supported flags
 
-At the current moment `yarn` has no equivalent flags for `--save-bundle` or `--no-save`. These will be ignored when `yarn` has been detected as package manager.
+At the current moment `yarn` and `pnpm` have no equivalent flags for `--save-bundle` or `--no-save`. These will be ignored when `yarn` or `pnpm` has been detected as package manager.
 
 The flags that were ignored in the run are returned as the `ignoredFlags` property.
 

@@ -20,6 +20,7 @@
   "keywords": [
     "npm",
     "yarn",
+    "pnpm",
     "install",
     "cli",
     "script"

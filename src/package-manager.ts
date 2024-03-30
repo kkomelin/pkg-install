@@ -12,7 +12,7 @@ import {
 
 /**
  * Determine what package manager to use based on what preference is set,
- * and whether it's currently running in a yarn/npm script
+ * and whether it's currently running in a yarn/npm/pnpm script
  *
  * @export
  * @param {InstallConfig} config

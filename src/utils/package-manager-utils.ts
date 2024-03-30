@@ -62,6 +62,10 @@ export function getCurrentPackageManager(): SupportedPackageManagers | null {
     return 'yarn';
   }
 
+  if (userAgent.startsWith('pnpm')) {
+    return 'pnpm';
+  }
+
   return null;
 }
 
@@ -77,6 +81,7 @@ export async function getPackageManagerFromLockfile(
 ): Promise<SupportedPackageManagers | null> {
   const pkgLockPath = path.join(config.cwd, 'package-lock.json');
   const yarnLockPath = path.join(config.cwd, 'yarn.lock');
+  const pnpmLockPath = path.join(config.cwd, 'pnpm-lock.yaml');
   try {
     await access(pkgLockPath);
     return 'npm';
@@ -85,7 +90,12 @@ export async function getPackageManagerFromLockfile(
       await access(yarnLockPath);
       return 'yarn';
     } catch (err) {
-      return null;
+      try {
+        await access(pnpmLockPath);
+        return 'pnpm';
+      } catch (err) {
+        return null;
+      }
     }
   }
 }
@@ -102,6 +112,7 @@ export function getPackageManagerFromLockfileSync(
 ): SupportedPackageManagers | null {
   const pkgLockPath = path.join(config.cwd, 'package-lock.json');
   const yarnLockPath = path.join(config.cwd, 'yarn.lock');
+  const pnpmLockPath = path.join(config.cwd, 'pnpm-lock.yaml');
   try {
     accessSync(pkgLockPath);
     return 'npm';
@@ -110,7 +121,12 @@ export function getPackageManagerFromLockfileSync(
       accessSync(yarnLockPath);
       return 'yarn';
     } catch (err) {
-      return null;
+      try {
+        accessSync(pnpmLockPath);
+        return 'pnpm';
+      } catch (err) {
+        return null;
+      }
     }
   }
 }

@@ -8,7 +8,7 @@ export type PackageMap = {
 
 export type PackageList = string[];
 export type Packages = PackageMap | PackageList;
-export type SupportedPackageManagers = 'yarn' | 'npm';
+export type SupportedPackageManagers = 'yarn' | 'npm' | 'pnpm';
 
 /**
  * What to do with I/O. This is passed to `execa`
