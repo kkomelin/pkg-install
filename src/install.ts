@@ -9,6 +9,7 @@ import {
 import { getExecaConfig, getPackageList } from './helpers';
 import { constructNpmArguments, npmProjectInstallArgs } from './npm';
 import { getPackageManager, getPackageManagerSync } from './package-manager';
+import { constructPnpmArguments, pnpmProjectInstallArgs } from "./pnpm";
 import { PackageList, Packages } from './types';
 import { constructYarnArguments, yarnProjectInstallArgs } from './yarn';
 
@@ -36,7 +37,11 @@ export async function install(
 
   const packageList = getPackageList(packages);
   const getArguments =
-    pkgManager === 'npm' ? constructNpmArguments : constructYarnArguments;
+    pkgManager === "npm"
+      ? constructNpmArguments
+      : pkgManager === "yarn"
+      ? constructYarnArguments
+      : constructPnpmArguments;
   const { args, ignoredFlags } = getArguments(packageList, config);
 
   const result = await execa(pkgManager, args, getExecaConfig(config));
@@ -68,7 +73,11 @@ export function installSync(
 
   const packageList = getPackageList(packages);
   const getArguments =
-    pkgManager === 'npm' ? constructNpmArguments : constructYarnArguments;
+    pkgManager === "npm"
+      ? constructNpmArguments
+      : pkgManager === "yarn"
+      ? constructYarnArguments
+      : constructPnpmArguments;
   const { args, ignoredFlags } = getArguments(packageList, config);
 
   const result = execa.sync(pkgManager, args, getExecaConfig(config));
@@ -97,7 +106,11 @@ export async function projectInstall(
   const pkgManager = await getPackageManager(config);
 
   const args =
-    pkgManager === 'npm' ? npmProjectInstallArgs : yarnProjectInstallArgs;
+    pkgManager === "npm"
+      ? npmProjectInstallArgs
+      : pkgManager === "yarn"
+      ? yarnProjectInstallArgs
+      : pnpmProjectInstallArgs;
 
   return execa(pkgManager, args, getExecaConfig(config));
 }
@@ -121,7 +134,11 @@ export function projectInstallSync(
   const pkgManager = getPackageManagerSync(config);
 
   const args =
-    pkgManager === 'npm' ? npmProjectInstallArgs : yarnProjectInstallArgs;
+    pkgManager === "npm"
+      ? npmProjectInstallArgs
+      : pkgManager === "yarn"
+      ? yarnProjectInstallArgs
+      : pnpmProjectInstallArgs;
 
   return execa.sync(pkgManager, args, getExecaConfig(config));
 }
