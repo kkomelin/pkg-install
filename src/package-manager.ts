@@ -22,7 +22,7 @@ export async function getPackageManager(
   config: InstallConfig
 ): Promise<SupportedPackageManagers> {
   let pkgManager = config.prefer || getCurrentPackageManager();
-console.log(pkgManager)
+
   if (!pkgManager) {
     pkgManager = await getPackageManagerFromLockfile(config);
   }
@@ -38,8 +38,6 @@ console.log(pkgManager)
       throw new Error('No supported package manager found');
     }
   }
-
-  console.log(pkgManager)
 
   return pkgManager;
 }
